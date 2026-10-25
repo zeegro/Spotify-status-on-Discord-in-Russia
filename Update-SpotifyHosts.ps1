@@ -15,7 +15,9 @@ function Show-ErrorNotification {
     } catch {}
 }
 
-$domains = @("gew1-spclient.spotify.com", "api.spotify.com", "api-partner.spotify.com")
+$domains = @("gew1-spclient.spotify.com", "api.spotify.com", "api-partner.spotify.com", "spclient.wg.spotify.com
+", "dealer.spotify.com
+")
 $targetHost = "eu.geohide.ru"
 $hostsPath = "$env:SystemRoot\System32\drivers\etc\hosts"
 $spotifyPath = "$env:APPDATA\Spotify\Spotify.exe"
