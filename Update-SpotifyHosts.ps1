@@ -1,3 +1,9 @@
+$isAdmin = ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
+if (-not $isAdmin) {
+    Start-Process powershell -Verb RunAs -ArgumentList "-ExecutionPolicy Bypass -File `"$PSCommandPath`""
+    exit
+}
+
 function Show-ErrorNotification {
     param([string]$Title, [string]$Message)
     try {
@@ -15,9 +21,7 @@ function Show-ErrorNotification {
     } catch {}
 }
 
-$domains = @("gew1-spclient.spotify.com", "api.spotify.com", "api-partner.spotify.com", "spclient.wg.spotify.com
-", "dealer.spotify.com
-")
+$domains = @("gew1-spclient.spotify.com", "api.spotify.com", "api-partner.spotify.com", "spclient.wg.spotify.com", "dealer.spotify.com")
 $targetHost = "eu.geohide.ru"
 $hostsPath = "$env:SystemRoot\System32\drivers\etc\hosts"
 $spotifyPath = "$env:APPDATA\Spotify\Spotify.exe"
@@ -25,7 +29,7 @@ $spotifyPath = "$env:APPDATA\Spotify\Spotify.exe"
 try {
     $ips = [System.Net.Dns]::GetHostAddresses($targetHost) | Select-Object -ExpandProperty IPAddressToString
 } catch {
-    Show-ErrorNotification "Ошибка сети" "Не удалось получить IP от $targetHost. Проверьте интернет."
+    Show-ErrorNotification "РћС€РёР±РєР° СЃРµС‚Рё" "РќРµ СѓРґР°Р»РѕСЃСЊ РїРѕР»СѓС‡РёС‚СЊ IP РѕС‚ $targetHost. РџСЂРѕРІРµСЂСЊС‚Рµ РёРЅС‚РµСЂРЅРµС‚."
     exit
 }
 
@@ -77,8 +81,8 @@ if ($foundWorkingIp) {
         
         Start-Process $spotifyPath
     } catch {
-        Show-ErrorNotification "Ошибка записи" "Не удалось обновить hosts: $($_.Exception.Message)"
+        Show-ErrorNotification "РћС€РёР±РєР° Р·Р°РїРёСЃРё" "РќРµ СѓРґР°Р»РѕСЃСЊ РѕР±РЅРѕРІРёС‚СЊ hosts: $($_.Exception.Message)"
     }
 } else {
-    Show-ErrorNotification "Ошибка подключения" "Ни один IP от $targetHost не отвечает. Возможно, провайдер их заблокировал."
+    Show-ErrorNotification "РћС€РёР±РєР° РїРѕРґРєР»СЋС‡РµРЅРёСЏ" "РќРё РѕРґРёРЅ IP РѕС‚ $targetHost РЅРµ РѕС‚РІРµС‡Р°РµС‚. Р’РѕР·РјРѕР¶РЅРѕ, РїСЂРѕРІР°Р№РґРµСЂ РёС… Р·Р°Р±Р»РѕРєРёСЂРѕРІР°Р»."
 }
