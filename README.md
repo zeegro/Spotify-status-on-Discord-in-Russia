@@ -8,6 +8,8 @@
 - `gew1-spclient.spotify.com`
 - `api.spotify.com`
 - `api-partner.spotify.com`
+- `spclient.wg.spotify.com`
+- `dealer.spotify.com`
 
 ## 🚀 Как использовать
 
